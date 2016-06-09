@@ -6,5 +6,11 @@ angularApp.config(function ($routeProvider,$httpProvider){
     controller: 'HomeController',
     controllerAs: 'hc'
   })
-  
-}
+});
+angularApp.controller("HomeController",['$resource','$routeParams',function($resource,$routeParams){
+  var vm = this;
+  // var id = $route
+  var details = $resource('http://api.census.gov/data/timeseries/idb/1year?get=AREA_KM2,NAME,AGE,POP&FIPS=us&time=2010')
+  vm.response = details.query();
+  console.log(vm.response);
+}]);
