@@ -6,7 +6,7 @@ angularApp.config(function ($routeProvider,$httpProvider){
     controller: 'HomeController',
     controllerAs: 'hc'
   })
-  .when('/',{
+  .when('/indiadetails',{
     templateUrl:'pages/second.html',
     controller:'SecondController',
     controllerAs:'sc'
@@ -25,11 +25,10 @@ angularApp.controller("HomeController",['$resource',function($resource){
 }]);
 angularApp.controller("SecondController",['$resource',function ($resource){
   var vm = this;
-  vm.getdetails =function(){
-
-  }
-
-}])
+  var details =$resource('http://api.census.gov/data/timeseries/idb/1year?get=AREA_KM2,NAME,AGE,POP&FIPS=IN&time=2014&SEX=0&key=4d7e81b99a7305297e1ed81f1f9c923a17010890');
+  vm.response = details.query();
+  console.log(vm.response);
+}]);
 
 
 
