@@ -7,10 +7,20 @@ angularApp.config(function ($routeProvider,$httpProvider){
     controllerAs: 'hc'
   })
 });
-angularApp.controller("HomeController",['$resource','$routeParams',function($resource,$routeParams){
+angularApp.controller("HomeController",['$resource','$routeParams','landingservice',function($resource,$routeParams,landingservice){
   var vm = this;
-  // var id = $route
-  var details = $resource('http://api.census.gov/data/timeseries/idb/1year?get=AREA_KM2,NAME,AGE,POP&FIPS=us&time=2010')
-  vm.response = details.query();
-  console.log(vm.response);
+  vm.details = landingservice.getdetails();
+  console.log(vm.details);
 }]);
+
+
+
+angularApp.service('landingservice',function($resource,$routeParams){
+  var vm = this;
+  vm.getdetails = function (){
+    var details =$resource('http://api.census.gov/data/timeseries/idb/1year?get=AREA_KM2,NAME,AGE,POP&FIPS=IN&time=2012')
+    vm.response = details.query();
+    return vm.response;
+    console.log(vm.response);
+  }
+});
